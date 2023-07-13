@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,17 +25,26 @@ public class CharacterMovement : MonoBehaviour
     private GroundChecker _groundChecker;
     
     
-    private void FixedUpdate()
+    private void Update()
     {
         ProcessMovement();
+    }
+
+    private void FixedUpdate()
+    {
         TryJump();
     }
-    
+
     private void ProcessMovement()
     {
         Vector3 inputVector = new Vector3(SidewaysInput, 0, ForwardInput);
         Vector3 mappedVector = transform.TransformDirection(inputVector);
         Vector3 targetVelocity = mappedVector * moveSpeed;
+        
+        //Map vector onto potentially tilted ground plane
+        if(_groundChecker.IsGrounded())
+            targetVelocity = Vector3.ProjectOnPlane(targetVelocity, _groundChecker.GetGround().Value.normal);
+        
         float accelerationControl = accelerationCurve01.Evaluate(_rigidbody.velocity.magnitude / targetVelocity.magnitude);
 
         //Less control in air

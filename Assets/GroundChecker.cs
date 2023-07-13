@@ -12,6 +12,11 @@ public class GroundChecker : MonoBehaviour
     
     public bool IsGrounded()
     {
+        return GetGround() != null;
+    }
+    
+    public RaycastHit? GetGround()
+    {
         float capsuleHeight = Mathf.Max(_capsuleCollider.radius * 2f, _capsuleCollider.height);
         Vector3 capsuleBottom = transform.TransformPoint(_capsuleCollider.center - Vector3.up * capsuleHeight / 2f);
         float radius = transform.TransformVector(_capsuleCollider.radius, 0f, 0f).magnitude;
@@ -24,11 +29,11 @@ public class GroundChecker : MonoBehaviour
             {
                 float maxDist = radius / Mathf.Cos(Mathf.Deg2Rad * normalAngle) - radius + .02f;
                 if (hit.distance < maxDist)
-                    return true;
+                    return hit;
             }
         }
 
-        return false;
+        return null;
     }
     
     private void Awake()
