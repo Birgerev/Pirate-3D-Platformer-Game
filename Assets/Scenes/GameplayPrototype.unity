@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddfb29bc80ee8a4cad13cd1765c08d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ropeStrength: 30
+  heightChangeResistance: 0.8
   maxRopeLength: 100
   raycasterOrigin: {fileID: 963194228}
   ropeVisualOrigin: {fileID: 277898439}
