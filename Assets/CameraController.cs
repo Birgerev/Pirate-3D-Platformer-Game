@@ -13,11 +13,14 @@ public class CameraController : MonoBehaviour
             Input.GetAxis("Mouse Y") * sensitivity.y,
             Input.GetAxis("Mouse X") * sensitivity.x, 
             0);
-        Vector3 finalEulerAngles = transform.eulerAngles + cameraMovement;
+        Vector3 finalEulerAngles = transform.localEulerAngles + cameraMovement;
         
-        //Clamp X-axis
-        finalEulerAngles.x = Mathf.Clamp(finalEulerAngles.x, -89, 89);
+        //Clamp rotation
+        if(finalEulerAngles.x is > 89 and < 180)
+            finalEulerAngles.x = 89;
+        if(finalEulerAngles.x is < 271 and > 180) 
+            finalEulerAngles.x = 271;
         
-        transform.eulerAngles = finalEulerAngles;
+        transform.localEulerAngles = finalEulerAngles;
     }
 }
