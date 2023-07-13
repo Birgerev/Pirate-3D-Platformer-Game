@@ -22,17 +22,24 @@ public class SlowmotionManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if(Input.GetKey(KeyCode.X))
+            SetTimeScale(.2f);
+        if(Input.GetKey(KeyCode.C))
+            SetTimeScale(1);
     }
 
     public void SetTimeScale(float newTimeScale)
     {
+        
+        //TODO smooth
         Time.timeScale = newTimeScale;
 
         float volumeWeight = 0;
-        if (newTimeScale < timeScaleVolumeApex)
-            volumeWeight = newTimeScale/timeScaleVolumeApex;
+        if (newTimeScale < 1)
+            volumeWeight = timeScaleVolumeApex/newTimeScale;
 
         _volume.weight = volumeWeight;
+        
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
     }
 }
